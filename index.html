@@ -251,32 +251,41 @@ window.onclick = function(e){
   if(e.target === m) m.style.display = "none";
 }
 
-/* LOAD SYLLABUS FROM LOCAL JSON */
-fetch("Database/syllabus.json")
-.then(res => res.json())
-.then(data => {
-  const container = document.getElementById("syllabusContainer");
+/* LOAD SYLLABUS FROM MULTIPLE TXT FILES */
+const syllabusFiles = [
+  {exam: "SSC GD", file: "Database/ssc-gd.txt", link: "ssc-gd.html"},
+  {exam: "Assam Police AB", file: "Database/assam-ab.txt", link: "assam-ab.html"},
+  {exam: "Assam Police UB", file: "Database/assam-ub.txt", link: "assam-ub.html"}
+];
 
-  Object.keys(data).forEach(exam => {
-    let card = document.createElement("div");
+const container = document.getElementById("syllabusContainer");
+
+syllabusFiles.forEach(item => {
+  fetch(item.file)
+  .then(res => res.text())
+  .then(text => {
+    const card = document.createElement("div");
     card.className = "card";
     card.style.marginBottom = "14px";
+    card.onclick = () => { goTo(item.link); };
 
-    let html = `<h3>${exam}</h3><ul class="syllabus">`;
-    data[exam].forEach(item => {
-      html += `<li>${item}</li>`;
-    });
+    const topics = text.split(/\r?\n/).filter(line => line.trim() !== "");
+    let html = `<h3>${item.exam}</h3><ul class="syllabus">`;
+    topics.forEach(t => html += `<li>${t}</li>`);
     html += `</ul>`;
 
     card.innerHTML = html;
     container.appendChild(card);
+  })
+  .catch(() => {
+    const errorCard = document.createElement("div");
+    errorCard.className = "card";
+    errorCard.style.marginBottom = "14px";
+    errorCard.innerHTML = `<h3>${item.exam}</h3><p style="color:red">Failed to load syllabus</p>`;
+    container.appendChild(errorCard);
   });
-})
-.catch(() => {
-  document.getElementById("syllabusContainer").innerHTML =
-    "<p style='color:red'>Failed to load syllabus</p>";
 });
 </script>
 
 </body>
-  </html>
+</html>

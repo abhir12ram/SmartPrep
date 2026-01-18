@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Govt Job Prep</title>
+
+<style>
+:root{
+  --green:#8dffb0;
+  --green-dark:#5fe19b;
+  --green-soft:#f1fff6;
+  --border:#b7f7cf;
+  --bg:#f7fffb;
+  --text:#0f172a;
+  --muted:#6b7280;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  padding:28px 22px;
+  border-bottom-left-radius:26px;
+  border-bottom-right-radius:26px;
+}
+.hero h1{
+  font-size:24px;
+  font-weight:700;
+}
+.hero p{
+  margin-top:8px;
+  font-size:14px;
+  opacity:0.9;
+}
+.hero-btn{
+  margin-top:16px;
+  width:100%;
+  padding:14px;
+  background:#fff;
+  border:2px solid var(--border);
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* SECTION */
+.section{
+  padding:20px;
+}
+.section-title{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:14px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+/* CARD */
+.card{
+  background:linear-gradient(180deg,#fff,var(--green-soft));
+  padding:18px;
+  border-radius:16px;
+  border:1.5px solid var(--border);
+  box-shadow:0 6px 14px rgba(0,0,0,0.06);
+  cursor:pointer;
+  transition:0.2s;
+}
+.card:hover{
+  transform:translateY(-3px);
+}
+.card h3{
+  font-size:15px;
+  font-weight:700;
+}
+.card p{
+  margin-top:6px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* ICON */
+.icon{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+/* SYLLABUS */
+.syllabus{
+  margin-top:8px;
+}
+.syllabus li{
+  margin-left:18px;
+  margin-top:6px;
+  font-size:13px;
+}
+
+/* FOOTER */
+footer{
+  padding:16px;
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:1000;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+}
+.modal-content{
+  background:#fff;
+  margin:15% auto;
+  padding:20px;
+  border-radius:18px;
+  width:85%;
+  max-width:400px;
+}
+.modal-close{
+  margin-top:14px;
+  padding:10px 20px;
+  background:var(--green);
+  border:none;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Prepare for Govt Exams</h1>
+  <p>SSC GD • Assam Police AB / UB • Notes • Tests • Fitness</p>
+  <button class="hero-btn" onclick="openModal()">Start Preparation</button>
+</section>
+
+<!-- EXAMS -->
+<section class="section">
+  <div class="section-title">Select Your Exam</div>
+  <div class="grid">
+    <div class="card" onclick="goTo('ssc-gd.html')">
+      <h3>SSC GD</h3>
+      <p>Full syllabus & mock tests</p>
+    </div>
+    <div class="card" onclick="goTo('assam-ab.html')">
+      <h3>Assam Police AB</h3>
+      <p>Constable (AB)</p>
+    </div>
+    <div class="card" onclick="goTo('assam-ub.html')">
+      <h3>Assam Police UB</h3>
+      <p>Constable (UB)</p>
+    </div>
+    <div class="card">
+      <h3>Other Exams</h3>
+      <p>Coming soon</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK ACCESS -->
+<section class="section">
+  <div class="section-title">Quick Access</div>
+  <div class="grid">
+
+    <div class="card" onclick="goTo('doubt.html')">
+      <div class="icon">❓</div>
+      <h3>Doubt Share</h3>
+      <p>Ask & solve doubts</p>
+    </div>
+
+    <div class="card" onclick="goTo('gk.html')">
+      <div class="icon">🌍</div>
+      <h3>General Knowledge</h3>
+      <p>Static GK & current affairs</p>
+    </div>
+
+    <div class="card" onclick="goTo('visual-notes.html')">
+      <div class="icon">🖼️</div>
+      <h3>Visual Notes</h3>
+      <p>PDFs, images & diagrams</p>
+    </div>
+
+    <div class="card" onclick="goTo('fitness.html')">
+      <div class="icon">🏃‍♂️</div>
+      <h3>Physical Fitness</h3>
+      <p>Running & physical prep</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- SYLLABUS -->
+<section class="section">
+  <div class="section-title">Syllabus Overview</div>
+  <div id="syllabusContainer"></div>
+</section>
+
+<footer>
+© 2026 Govt Job Prep • Built for Aspirants
+</footer>
+
+<!-- MODAL -->
+<div id="prepModal" class="modal">
+  <div class="modal-content">
+    <h2>Welcome to Govt Job Prep</h2>
+    <p>Start your exam preparation journey now!</p>
+    <button class="modal-close" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+function goTo(page){
+  window.location.href = page;
+}
+
+function openModal(){
+  document.getElementById("prepModal").style.display = "block";
+}
+function closeModal(){
+  document.getElementById("prepModal").style.display = "none";
+}
+
+window.onclick = function(e){
+  let m = document.getElementById("prepModal");
+  if(e.target === m) m.style.display = "none";
+}
+
+/* LOAD SYLLABUS FROM LOCAL JSON */
+fetch("Database/syllabus.json")
+.then(res => res.json())
+.then(data => {
+  const container = document.getElementById("syllabusContainer");
+
+  Object.keys(data).forEach(exam => {
+    let card = document.createElement("div");
+    card.className = "card";
+    card.style.marginBottom = "14px";
+
+    let html = `<h3>${exam}</h3><ul class="syllabus">`;
+    data[exam].forEach(item => {
+      html += `<li>${item}</li>`;
+    });
+    html += `</ul>`;
+
+    card.innerHTML = html;
+    container.appendChild(card);
+  });
+})
+.catch(() => {
+  document.getElementById("syllabusContainer").innerHTML =
+    "<p style='color:red'>Failed to load syllabus</p>";
+});
+</script>
+
+</body>
+  </html>
